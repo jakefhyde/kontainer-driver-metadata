@@ -654,3 +654,5 @@ releases:
       rke2-ingress-nginx:
         repo: rancher-rke2-charts
         version: 4.1.003
+    featureVersions:
+      encryption-key-rotation: "1.0.0"

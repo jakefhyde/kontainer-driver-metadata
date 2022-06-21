@@ -14599,6 +14599,9 @@
       "type": "string"
      }
     },
+    "featureVersions": {
+     "encryption-key-rotation": "1.0.0"
+    },
     "maxChannelServerVersion": "v2.6.99",
     "minChannelServerVersion": "v2.6.4-alpha1",
     "serverArgs": {
@@ -19993,6 +19996,9 @@
       "repo": "rancher-rke2-charts",
       "version": "v3.8-build2021110402"
      }
+    },
+    "featureVersions": {
+     "encryption-key-rotation": "1.0.0"
     },
     "maxChannelServerVersion": "v2.6.99",
     "minChannelServerVersion": "v2.6.4-alpha1",

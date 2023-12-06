@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+cd $(dirname $0)/..
+source ./scripts/extract-rancher
+
+cd $RANCHER_DIR
+
+export CATTLE_RKE_METADATA_CONFIG='{\"refresh-interval-minutes\":\"1440\",\"url\":\"https://releases.rancher.com/kontainer-driver-metadata/dev-v2.8/data.json\"}'
+
+./scripts/provisioning-tests

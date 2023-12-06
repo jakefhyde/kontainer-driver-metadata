@@ -3,7 +3,6 @@ set -e
 
 cd $(dirname $0)/..
 
-
 echo Running go mod tidy
 go mod tidy
 
@@ -12,6 +11,9 @@ go mod verify
 
 echo Running go test
 go test ./pkg/...
+
+echo Running rancher v2prov tests
+./scripts/provisioning-tests
 
 echo Running go generate
 go generate

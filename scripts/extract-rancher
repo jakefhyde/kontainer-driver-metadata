@@ -1,0 +1,47 @@
+#!/bin/bash
+set -ex
+
+cd $(dirname $0)/..
+
+mkdir -p "./bin"
+
+BIN_DIR="$(realpath ./bin)"
+
+TMP_DIR=$(mktemp -d)
+
+pushd "$TMP_DIR"
+
+mkdir -p ./tar
+
+docker pull rancher/rancher:v2.8-head
+
+docker save rancher/rancher:v2.8-head > ./tar/rancher.tar
+
+pushd tar
+
+tar -xvf rancher.tar
+
+for t in $(find . -type f -name "*.tar"); do
+  if tar -tf "$t" "usr/bin/rancher"; then
+    echo "Found /usr/bin/rancher in $t"
+    tar -xvf "$t" usr/bin/rancher --strip-components 2
+    mv rancher rancher-tmp
+    break
+  fi
+done
+
+popd
+
+git clone --depth 1 -b release/v2.8 https://github.com/rancher/rancher.git
+
+ls -la rancher
+
+export RANCHER_DIR=$TMP_DIR/rancher
+
+mkdir -p "$RANCHER_DIR/bin"
+
+mv ./tar/rancher-tmp "$RANCHER_DIR/bin/rancher"
+
+rm -rf ./tar
+
+popd

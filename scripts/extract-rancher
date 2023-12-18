@@ -13,9 +13,13 @@ pushd "$TMP_DIR"
 
 mkdir -p ./tar
 
-docker pull rancher/rancher:v2.8-head
+IMAGE_REPO=${IMAGE_REPO:-rancher/rancher}
+IMAGE_TAG=${IMAGE_TAG:-v2.8-head}
+IMAGE=${IMAGE:-$IMAGE_REPO:$IMAGE_TAG}
 
-docker save rancher/rancher:v2.8-head > ./tar/rancher.tar
+docker pull $IMAGE
+
+docker save $IMAGE > ./tar/rancher.tar
 
 pushd tar
 
@@ -32,7 +36,12 @@ done
 
 popd
 
-git clone --depth 1 -b release/v2.8 https://github.com/rancher/rancher.git
+mkdir -p rancher
+
+GIT_URL=${GIT_URL:-https://github.com/rancher/rancher.git}
+GIT_BRANCH=${GIT_BRANCH:-release/v2.8}
+
+git clone --depth 1 -b $GIT_BRANCH $GIT_URL ./rancher
 
 ls -la rancher
 
